@@ -1,0 +1,6 @@
+.contentBox {
+    margin: 2rem;
+    text-align: justify;
+    column-count: 2;
+    column-gap: 20px;
+}

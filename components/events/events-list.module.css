@@ -1,0 +1,15 @@
+.image {
+    max-width: 400px;
+}
+
+.tab {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.tab td {
+    font-size: 22px;
+    text-align: center;
+    padding: 16px;
+}
