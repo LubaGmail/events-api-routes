@@ -15,3 +15,4 @@ III.    pages/api/newsletter.js                         function newsletter (req
 
 IV.     HomePage 
                 <NewsletterForm /> -> [Register] -> /api/newsletter 
+

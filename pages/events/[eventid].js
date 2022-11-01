@@ -5,6 +5,8 @@ import GetData, { getFeaturedEvents, getEvent } from '../../components/util/get-
 import styles from './eventid.module.css'
 import Button from '../../components/ui/button'
 
+import Comments from '../../components/inputs/comments'
+
 const EventDetailPage = (props) => {
     const event = props.event
     const router = useRouter()
@@ -25,7 +27,7 @@ const EventDetailPage = (props) => {
         <>
             <div>
                 <Head>
-                    <title>{event.title} - {formattedDate}</title>
+                    <title key="title">{event.title} - {formattedDate}</title>
                     <meta
                         name={event.title}
                         description={event.description}
@@ -65,23 +67,26 @@ const EventDetailPage = (props) => {
                     </Button>
                 </div>
             </div>
+
+            <div className='center'>
+                <Comments />
+            </div>
         </>
     )
 }
 
 export async function getStaticPaths() {
-    
-    /* 
-        Expected: { paths: [ {params: {key: value} } ], fallback: boolean }
-    */
+    const events = await getFeaturedEvents();
+    const paths = events.map(event => ({ params: { eventid: event.eventid } }));
+
+    // return {
+    //     paths: [{ params: { eventid: 'e1' } }, { params: { eventid: 'e2' } }],
+    //     fallback: true
+    // }
     return {
-        paths:
-            [
-                { params: { eventid: 'e1' } },
-                { params: { eventid: 'e2' } }
-            ],
-            fallback: true
-    }
+        paths: paths,
+        fallback: 'blocking'
+    };
 }
 
 export async function getStaticProps(context) {
@@ -94,9 +99,7 @@ export async function getStaticProps(context) {
         }
     }
 
-    /* 
-        Expected: { props: { key: value } }
-    */
+    // Expected: { props: { key: value } }
     return {
         props: {
             event: event
