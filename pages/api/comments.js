@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-// http://localhost:3000/api/newsletter
+// http://localhost:3000/api/comments
 
 export const getData = () => {
     const filePath = getFilepath()
@@ -11,7 +11,7 @@ export const getData = () => {
     return data
 }
 const getFilepath = () => {
-    const filePath = path.join(process.cwd(), 'data', 'newsletter.json')
+    const filePath = path.join(process.cwd(), 'data', 'comments.json')
     return filePath
 }
 
@@ -25,9 +25,9 @@ const handler = (req, res) => {
             res.status(201).json({ status: 'success', record: req.body })
             break
         case 'GET':
-            const feedbackArr = getData()
+            const commentsArr = getData()
      
-            res.status(200).json({ status: 'success', feedback: feedbackArr })
+            res.status(200).json({ status: 'success', comments: commentsArr })
             break
         default:
             console.log('unhandled HTTP method')
@@ -35,3 +35,5 @@ const handler = (req, res) => {
 }
 
 export default handler
+
+

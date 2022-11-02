@@ -45,7 +45,7 @@ const NewsletterForm = () => {
               />
              <button>Register</button>&nbsp;
              {
-                done ? <img src='images/icons8-done-16.png' /> : null          
+                done ? <img src='/images/icons8-done-16.png' /> : null          
              }      
             </div>
           </form>

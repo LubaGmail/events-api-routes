@@ -1,22 +1,35 @@
+import { useEffect, useState } from 'react'
+
 import classes from './comment-list.module.css';
 
 const CommentList = (props) => {
+    const [comments, setComments] = useState()
+  
+    useEffect(() => {
+        const getData = async () => {
+            const res = await fetch('/api/comments')
+            const data = await res.json()
+            setComments(data.comments)
+        }
+
+        if (!comments) {
+            getData()
+        }
+    })
 
     return (
         <>
             <div className={classes.comments}>
-                <li>
-                    <p>My comment is amazing!</p>
-                    <div>
-                        By <address>Perchik</address>
-                    </div>
-                </li>
-                <li>
-                    <p>Have a nice day!</p>
-                    <div>
-                        By <address>Louis</address>
-                    </div>
-                </li>
+                {
+                    comments?.map((el, i) => (
+                        <li key={i}>
+                            <p>{el.comment}</p>
+                            <div>
+                                By <address>{el.name}</address>
+                            </div>
+                        </li>
+                    ))
+                }
             </div>
         </>
     )

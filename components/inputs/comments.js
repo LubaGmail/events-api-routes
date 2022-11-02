@@ -9,11 +9,11 @@ const Comments = (props) => {
     const [showComments, setShowComments] = useState(false);
 
     const toggleCommentsHandler = () => {
-        setShowComments((x) => !x);
+        setShowComments((prevStatus) => !prevStatus);       // implied variable 
     }
 
-    const addCommentHandler = (commentObj) => {
-        console.log('addCommentHandler', commentObj)
+    const addCommentHandler = async (result) => {
+       console.log('comments.addCommentHancler cb result', result)
     }
 
     return (
