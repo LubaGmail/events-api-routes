@@ -4,15 +4,15 @@ import classes from './newsletter-form.module.css'
 
 const NewsletterForm = () => {
     const emailRef = useRef()
-    const [done, setDone] = useState()
+    const [success, setSuccess] = useState()
     const [error, setError] = useState()
     const [isFormValid, setIsFormValid] = useState(false)
-    const doneIcon = '/images/icons8-done-16.png'
+    const successIcon = '/images/icons8-done-16.png'
     const errorIcon = '/images/icons8-exclamation-mark-16.png'
 
     const registrationHandler = async  (event) => {
         event.preventDefault();
-        setDone(false)
+        setSuccess(false)
         const email = emailRef.current.value
 
         const obj = {
@@ -30,7 +30,7 @@ const NewsletterForm = () => {
 
         const result = await res.json()
       if (result.status === 'success') {
-          setDone(true)
+          setSuccess(true)
           emailRef.current.value = ''
         } else  {
           setError(true)
@@ -39,7 +39,7 @@ const NewsletterForm = () => {
     }
   
     const handleChange = () => {
-      setIsFormValid(false); setDone(false); setError(false)
+      setIsFormValid(false); setSuccess(false); setError(false)
       if (!emailRef.current.value || emailRef.current.value.length < 6 ||
         !emailRef.current.value.includes('@') 
       ) {
@@ -51,7 +51,6 @@ const NewsletterForm = () => {
 
     return (
         <section className={classes.newsletter}>
-         
           <div className={classes.control}>
             <h3>Sign up to stay updated!</h3>
           </div>
@@ -68,8 +67,8 @@ const NewsletterForm = () => {
               <button disabled={!isFormValid} >
                 Register
               </button>&nbsp;
-              { done ? <img src={doneIcon} /> : null}      
-              { error ? <img src={errorIcon} /> : null    }  
+              { success ? <img src={successIcon} /> : null }      
+              { error   ? <img src={errorIcon} />   : null }  
             </div>
           </form>
         </section>

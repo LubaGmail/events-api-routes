@@ -23,7 +23,7 @@ const EventsPage = (props) => {
 
             <div className={styles.container}>
                 <SearchForm />
-                <h2>All Events</h2>
+                <p>All Events</p>
                 <div>
                 {
                     events.map ((el, i) => (
