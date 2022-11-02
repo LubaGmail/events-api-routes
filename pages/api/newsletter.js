@@ -18,12 +18,18 @@ const getFilepath = () => {
 const handler = (req, res) => {
     switch (req.method) {
         case 'POST':
-            const dataArr = getData()
-            dataArr.push(req.body)
-            fs.writeFileSync(getFilepath(), JSON.stringify(dataArr))
+            let email = req.body.email
 
-            res.status(201).json({ status: 'success', record: req.body })
-            break
+            if (!email || email < 5 || !email.includes('@') ) {
+                res.status(422).json({ status: 'validation failed', record: 'invalid email.' })
+            } else {
+                const dataArr = getData()
+                dataArr.push(req.body)
+                fs.writeFileSync(getFilepath(), JSON.stringify(dataArr))
+                res.status(201).json({ status: 'success', record: req.body })
+           }
+   
+           break
         case 'GET':
             const feedbackArr = getData()
      

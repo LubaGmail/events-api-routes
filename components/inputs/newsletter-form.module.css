@@ -1,7 +1,7 @@
 .newsletter {
     margin: 3rem auto;
     width: 90%;
-    max-width: 20rem;
+    max-width: 30rem;
   }
   
   .newsletter h2 {
@@ -27,9 +27,15 @@
     font: inherit;
     cursor: pointer;
   }
+
+  .newsletter button:disabled {
+    background: #dddddd;
+    color: white;
+    border: none;
+    cursor: none;
+  }
   
-  .newsletter button:hover,
-  .newsletter button:active {
+  .newsletter button:enabled:hover {
     background-color: #02afa1;
     border-color: #02afa1;
   }

@@ -6,19 +6,16 @@ const CommentList = (props) => {
     const [comments, setComments] = useState()
   
     useEffect(() => {
-        console.log('CommentList.useEffect')
+        console.log('CommentList.useEffect', props.refresh)
         const getData = async () => {
             const res = await fetch('/api/comments')
             const data = await res.json()
             setComments(data.comments)
         }
 
-        if (!comments) {
-            getData()
-        }
-      
-
-    },[comments])
+        getData()
+  
+    },[props.refresh])
 
     return (
         <>

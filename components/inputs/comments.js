@@ -7,13 +7,17 @@ import NewComment from './comment-new'
 const Comments = (props) => {
     const { eventId } = props;
     const [showComments, setShowComments] = useState(false);
+    const [refresh, setRefresh] = useState(false)
 
     const toggleCommentsHandler = () => {
         setShowComments((prevStatus) => !prevStatus);       // implied variable 
     }
 
     const addCommentHandler = (result) => {
-       console.log('comments.addCommentHancler cb result', result)
+        setRefresh(false)
+        if (result.status === 'success') {
+            setRefresh(true)
+        }
     }
 
     return (
@@ -25,7 +29,7 @@ const Comments = (props) => {
                     {showComments ? 'Hide' : 'Show'} Comments
                 </button>
                 {showComments && <NewComment onAddComment={addCommentHandler}  />}
-                {showComments && <CommentList />}
+                {showComments && <CommentList refresh={refresh} />}
             </section>
         </>
     )

@@ -32,6 +32,7 @@ const EventDetailPage = (props) => {
                         name={event.title}
                         description={event.description}
                     />
+                    <link rel = "icon" href = "/images/icons8-wolf-40.png" type = "image/x-icon" />
                 </Head>
             </div>
 

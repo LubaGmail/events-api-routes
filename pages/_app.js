@@ -16,7 +16,7 @@ function MyApp({ Component, pageProps }) {
           description='Crazy events'
           content='Super crazy events'
         />
-        <link rel = "icon" href = "images/icons8-wolf-40.png" type = "image/x-icon" />
+        <link rel = "icon" href = "/images/icons8-wolf-40.png" type = "image/x-icon" />
         
       </Head>
       <Component {...pageProps} />
