@@ -6,6 +6,7 @@ const CommentList = (props) => {
     const [comments, setComments] = useState()
   
     useEffect(() => {
+        console.log('CommentList.useEffect')
         const getData = async () => {
             const res = await fetch('/api/comments')
             const data = await res.json()
@@ -15,7 +16,9 @@ const CommentList = (props) => {
         if (!comments) {
             getData()
         }
-    })
+      
+
+    },[comments])
 
     return (
         <>

@@ -12,7 +12,7 @@ const Comments = (props) => {
         setShowComments((prevStatus) => !prevStatus);       // implied variable 
     }
 
-    const addCommentHandler = async (result) => {
+    const addCommentHandler = (result) => {
        console.log('comments.addCommentHancler cb result', result)
     }
 
