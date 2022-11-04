@@ -23,4 +23,9 @@ V.      Comments
         pages/events/[eventid] (eventid) -> components/input/Comments (eventid)  -> CommentList
         -> pages/api/index.js   
 
+VI      API side validation
+
+
+
+
                                                                                                
