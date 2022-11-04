@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import Head from 'next/head'
 
-import GetData, { getFeaturedEvents, getEvent } from '../../components/util/get-data'
+import { getFeaturedEvents, getEvent } from '../../components/util/get-data'
 import styles from './eventid.module.css'
 import Button from '../../components/ui/button'
 
@@ -70,7 +70,7 @@ const EventDetailPage = (props) => {
             </div>
 
             <div className='center'>
-                <Comments />
+                <Comments  eventid={event.eventid} />
             </div>
         </>
     )

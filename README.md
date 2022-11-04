@@ -14,5 +14,7 @@ III.    pages/api/newsletter.js                         function newsletter (req
         i.      write to /data/newsletter.json
 
 IV.     HomePage 
-                <NewsletterForm /> -> [Register] -> /api/newsletter 
+            <NewsletterForm /> -> [Register] -> /api/newsletter 
 
+V.      Comments
+        pages/events/[eventid].js  -> (eventid) ->  components/input/comments/Comments (eventid) -->  NewComment   

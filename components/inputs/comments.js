@@ -5,7 +5,8 @@ import CommentList from './comment-list'
 import NewComment from './comment-new'
 
 const Comments = (props) => {
-    const { eventId } = props;
+    const { eventid } = props;
+    
     const [showComments, setShowComments] = useState(false);
     const [refresh, setRefresh] = useState(false)
 
@@ -28,7 +29,7 @@ const Comments = (props) => {
                 >
                     {showComments ? 'Hide' : 'Show'} Comments
                 </button>
-                {showComments && <NewComment onAddComment={addCommentHandler}  />}
+                {showComments && <NewComment onAddComment={addCommentHandler} eventid={eventid} />}
                 {showComments && <CommentList refresh={refresh} />}
             </section>
         </>

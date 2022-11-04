@@ -21,12 +21,10 @@ const handler = (req, res) => {
             const dataArr = getData()
             dataArr.push(req.body)
             fs.writeFileSync(getFilepath(), JSON.stringify(dataArr))
-
             res.status(201).json({ status: 'success', record: req.body })
             break
         case 'GET':
             const commentsArr = getData()
-     
             res.status(200).json({ status: 'success', comments: commentsArr })
             break
         default:

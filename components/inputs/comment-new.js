@@ -34,12 +34,13 @@ const NewComment = (props) => {
 
         const commentObj = {
             id: new Date().toISOString(),
+            eventid: props.eventid,
             email: emailInputRef.current.value,
             name:  nameInputRef.current.value,
             comment: commentInputRef.current.value 
         }
 
-        const res = await fetch('/api/comments', {
+        const res = await fetch('/api/comments/' + props/eventid, {
             method: 'POST', 
             body: JSON.stringify(commentObj),
             headers: {
