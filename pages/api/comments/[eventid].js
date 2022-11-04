@@ -1,5 +1,7 @@
 import fs from 'fs'
 import path from 'path'
+import { useRouter } from 'next/router'
+
 
 // http://localhost:3000/api/comments
 
@@ -16,6 +18,8 @@ const getFilepath = () => {
 }
 
 const handler = (req, res) => {
+    let eventid =  req.query.eventid
+
     switch (req.method) {
         case 'POST':
             const dataArr = getData()
@@ -24,7 +28,8 @@ const handler = (req, res) => {
             res.status(201).json({ status: 'success', record: req.body })
             break
         case 'GET':
-            const commentsArr = getData()
+            const commentsArr = getData().filter(el => el.eventid === eventid)
+            
             res.status(200).json({ status: 'success', comments: commentsArr })
             break
         default:

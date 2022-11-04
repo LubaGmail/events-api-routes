@@ -17,4 +17,10 @@ IV.     HomePage
             <NewsletterForm /> -> [Register] -> /api/newsletter 
 
 V.      Comments
-        pages/events/[eventid].js  -> (eventid) ->  components/input/comments/Comments (eventid) -->  NewComment   
+        pages/events/[eventid] (eventid) ->  components/input/Comments (eventid) ->  NewComment   
+        -> pages/api/[eventid].js
+        
+        pages/events/[eventid] (eventid) -> components/input/Comments (eventid)  -> CommentList
+        -> pages/api/index.js   
+
+                                                                                               

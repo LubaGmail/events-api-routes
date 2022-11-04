@@ -30,7 +30,7 @@ const Comments = (props) => {
                     {showComments ? 'Hide' : 'Show'} Comments
                 </button>
                 {showComments && <NewComment onAddComment={addCommentHandler} eventid={eventid} />}
-                {showComments && <CommentList refresh={refresh} />}
+                {showComments && <CommentList eventid={eventid}  refresh={refresh} />}
             </section>
         </>
     )

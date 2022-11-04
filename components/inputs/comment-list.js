@@ -8,14 +8,14 @@ const CommentList = (props) => {
     useEffect(() => {
         console.log('CommentList.useEffect', props.refresh)
         const getData = async () => {
-            const res = await fetch('/api/comments')
+            const res = await fetch('/api/comments/' + props.eventid)
             const data = await res.json()
             setComments(data.comments)
         }
 
         getData()
   
-    },[props.refresh])
+    },[props])
 
     return (
         <>
