@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 const MONGO_URI = 'mongodb+srv://m220student:perchik@cluster0.jb7dw.mongodb.net/?retryWrites=true&w=majority'
 const MongoClient = require('mongodb').MongoClient 
 
-// http://localhost:3000/api/mongo/e1
+// http://localhost:3000/api/mongo/e2
 
 const validate = ( {id, eventid, email, name, comment} ) => {
     if (
@@ -39,9 +39,23 @@ const handler = async(req, res) => {
             }
             break
         case 'GET':
-            const commentsArr = getData().filter(el => el.eventid === eventid)
-            
-            res.status(200).json({ status: 'validation errors', comments: commentsArr })
+            const client = await MongoClient.connect(MONGO_URI)
+            const db = client.db('events')
+            const coll = db.collection('comments')
+
+            try {
+                let query = { eventid: eventid };
+                let cursor = await coll.find(query)
+                let arr = await cursor.toArray()
+
+                res.status(200).json({ status: 'success', comments: arr })
+            } catch (e) {
+                console.log('Error: ' + e)
+                res.status(500).json({ status: 'failure', record: req.body })
+                throw new Error(e)
+            } 
+            if (client) client.close();
+
             break
         default:
             console.log('unhandled HTTP method')

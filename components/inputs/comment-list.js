@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react'
-
 import classes from './comment-list.module.css';
+
+const FILE_API = '/api/comments/'
+const MONGO_API = '/api/mongo/'
 
 const CommentList = (props) => {
     const [comments, setComments] = useState()
   
     useEffect(() => {
         const getData = async () => {
-            const res = await fetch('/api/comments/' + props.eventid)
+            const res = await fetch(MONGO_API + props.eventid)
             const data = await res.json()
             setComments(data.comments)
         }
