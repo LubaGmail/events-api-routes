@@ -26,6 +26,14 @@ V.      Comments
 VI      API side validation
         i.  newsletter 
 
+VII     Mongodb
+        i.      npm i mongodb       const MongoClient = require('mongodb').MongoClient      
+                                    MongoClient.connect(uri).then(client => client.db());
+        ii.     pages/api/mongo/
+
+        iii.    HomePage -> <NewsletterForm />  ->  /api/mongo/newsletter 
+
+
 
 
                                                                                                

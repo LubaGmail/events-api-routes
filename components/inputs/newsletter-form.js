@@ -2,6 +2,9 @@ import {useRef, useState} from 'react'
 
 import classes from './newsletter-form.module.css'
 
+const FILE_API = '/api/newsletter'
+const MONGO_API = '/api/mongo/newsletter' 
+
 const NewsletterForm = () => {
     const emailRef = useRef()
     const [success, setSuccess] = useState()
@@ -20,7 +23,7 @@ const NewsletterForm = () => {
             email: email
         }
 
-        const res = await fetch('/api/newsletter', {
+        const res = await fetch(MONGO_API, {
             method: 'POST', 
             body: JSON.stringify(obj),
             headers: {
