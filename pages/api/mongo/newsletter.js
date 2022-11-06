@@ -36,11 +36,11 @@ const handler = async(req, res) => {
                     .limit(10)
                    
                 let arr = await cursor.toArray()
-                console.table(arr)
                 res.status(200).json({ status: 'success', record: arr })
             } catch (e) {
                 console.log('Error: ' + e)
                 res.status(500).json({ status: 'failure', record: req.body })
+                throw new Error(e)
             } 
             if (client) client.close();
 

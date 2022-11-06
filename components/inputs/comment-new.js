@@ -1,6 +1,9 @@
 import { useRef, useState } from 'react';
 import classes from './comment-new.module.css';
 
+const FILE_API = '/api/comments/'
+const MONGO_API = '/api/mongo/'
+
 const NewComment = (props) => {
     const [done, setDone] = useState()
     const [isFormValid, setIsFormValid] = useState()
@@ -33,14 +36,13 @@ const NewComment = (props) => {
         if (!isFormValid) return;
 
         const commentObj = {
-            id: new Date().toISOString(),
             eventid: props.eventid,
             email: emailInputRef.current.value,
             name:  nameInputRef.current.value,
             comment: commentInputRef.current.value 
         }
 
-        const res = await fetch('/api/comments/' + props/eventid, {
+        const res = await fetch(MONGO_API + props/eventid, {
             method: 'POST', 
             body: JSON.stringify(commentObj),
             headers: {

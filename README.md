@@ -31,9 +31,17 @@ VII     Mongodb
                                     MongoClient.connect(uri).then(client => client.db());
         ii.     pages/api/mongo/
 
-        iii.    HomePage -> <NewsletterForm />  ->  /api/mongo/newsletter 
+        iii.    Newsletter
+                HomePage -> <NewsletterForm />  ->  /api/mongo/newsletter 
 
+        iv.     New Comment
+                pages/events/[eventid] (eventid) ->  components/input/Comments (eventid) ->  NewComment   
 
+        v.      Comments
+                pages/events/[eventid] (eventid) -> components/input/Comments (eventid)  -> CommentList
+
+                > var firstName="Bob";
+                > db.demo107.find({"Name":firstName});
 
 
                                                                                                
