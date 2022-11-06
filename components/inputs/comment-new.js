@@ -18,11 +18,11 @@ const NewComment = (props) => {
 
     const validate = () => {
         setDone(false)
-        if (emailInputRef.current.value && emailInputRef.current.value.length > 3
+        if (emailInputRef.current.value && emailInputRef.current.value.length > 5
             &&
             nameInputRef.current.value && nameInputRef.current.value.length > 0
             &&
-            commentInputRef.current.value && commentInputRef.current.value.length > 3
+            commentInputRef.current.value && commentInputRef.current.value.length > 0
         ) {
             setIsFormValid(true)
         }
@@ -47,6 +47,9 @@ const NewComment = (props) => {
                 'Content-Type': 'application/json'
             }
         })
+        if (res.status === 422) {
+            throw new Error('Input validation error.  Please contact your support group at 410 111-222')
+        }
 
         const result = await res.json()
         setDone(true)

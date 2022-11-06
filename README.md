@@ -24,7 +24,7 @@ V.      Comments
         -> pages/api/index.js   
 
 VI      API side validation
-
+        i.  newsletter 
 
 
 
