@@ -20,12 +20,10 @@
   .newsletter button {
     background-color: #03be9f;
     border: 1px solid #03be9f;
-    border-radius: 6px;
-    color: #dafff7;
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
+    color: white;
     font: inherit;
     cursor: pointer;
+    padding: .3rem .5rem;
   }
 
   .newsletter button:disabled {
@@ -46,4 +44,9 @@
   
   .control input {
     flex: 1;
+  }
+
+  .errorDiv {
+    background-color: bisque;
+    padding: 1rem;  
   }

@@ -1,6 +1,6 @@
 // http://localhost:3000/api/mongo/newsletter
 
-const MONGO_URI = 'mongodb+srv://m220student:zperchik@cluster0.jb7dw.mongodb.net/?retryWrites=true&w=majority'
+const MONGO_URI = 'mongodb+srv://m220student:perchik@cluster0.jb7dw.mongodb.net/?retryWrites=true&w=majority'
 const MongoClient = require('mongodb').MongoClient 
 
 const connectDb = async () => {
@@ -27,7 +27,7 @@ const handler = async(req, res) => {
                 try {
                     client = await connectDb()
                 } catch (error) {
-                    res.status(500).json({ status: 'failed to connect', result: error })
+                    res.status(500).json({ status: 'Failed to connect', result: error })
                     return 
                 }
          
@@ -37,7 +37,7 @@ const handler = async(req, res) => {
                     res.status(201).json({ status: 'success', result: result })
                 } catch (error) {
                     console.log('insert error', error)
-                    res.status(500).json({ status: 'failed to connect', result: error })
+                    res.status(500).json({ status: 'Failed to insert', result: error })
                     if (client) client.close()  
                     return
                 }

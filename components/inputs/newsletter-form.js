@@ -10,7 +10,6 @@ const MONGO_API = '/api/mongo/newsletter'
 const NewsletterForm = () => {
     const emailRef = useRef()
     const [success, setSuccess] = useState()
-    const [isError, setIsError] = useState()
     const [errorInfo, setErrorInfo] = useState()
     const [isFormValid, setIsFormValid] = useState(false)
     const successIcon = '/images/icons8-done-16.png'
@@ -41,7 +40,6 @@ const NewsletterForm = () => {
             setSuccess(true)
             emailRef.current.value = ''
           } else  {
-            setIsError(true)
             const obj = {
               statusCode: res.status,
               appStatus: data.status,
@@ -55,7 +53,6 @@ const NewsletterForm = () => {
     }
   
     const dismissError = () => {
-      setIsError(false)
       setErrorInfo(null)
       setIsModalVisible(false);
     }
@@ -70,7 +67,7 @@ const NewsletterForm = () => {
       
         
     const handleChange = () => {
-      setIsFormValid(false); setSuccess(false); setIsError(false)
+      setIsFormValid(false); setSuccess(false); setErrorInfo(null)
       if (!emailRef.current.value || emailRef.current.value.length < 6 ||
         !emailRef.current.value.includes('@') 
       ) {
@@ -84,8 +81,8 @@ const NewsletterForm = () => {
       <section className={classes.newsletter}>
         {/* errorInfo: {JSON.stringify({errorInfo})} */}
         {
-          isError && <div>
-            Error occured. <button onClick={showErrorDetail}>See error details</button> <button onClick={dismissError}>x</button>
+          errorInfo && <div className={classes.errorDiv}>
+            Error occured <button onClick={showErrorDetail}>See error details</button> <button onClick={dismissError}>x</button>
           </div>
         }
           <div className={classes.control}>
@@ -104,11 +101,14 @@ const NewsletterForm = () => {
               <button disabled={!isFormValid} >
                 Register
               </button>&nbsp;
+          
+              
               { success ? <img src={successIcon} /> : null }      
-              {isError ? <img src={errorIcon} /> : null}  
-            
-              {isModalVisible && <Backdrop hideErrorDetail={hideErrorDetail} />}
-              {isModalVisible && <Modal hideErrorDetail={hideErrorDetail} errorInfo={errorInfo} />}
+              { errorInfo ? <img src={errorIcon} /> : null}  
+              
+
+                {isModalVisible && <Backdrop hideErrorDetail={hideErrorDetail} />}
+                {isModalVisible && <Modal hideErrorDetail={hideErrorDetail} errorInfo={errorInfo} />}
 
             </div>
           </form>
