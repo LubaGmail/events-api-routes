@@ -7,6 +7,7 @@ const MONGO_API = '/api/mongo/'
 const NewComment = (props) => {
     const [done, setDone] = useState()
     const [isFormValid, setIsFormValid] = useState()
+    const [errorInfo, setErrorInfo] = useState()
 
     const emailInputRef = useRef()
     const nameInputRef = useRef()
@@ -35,6 +36,7 @@ const NewComment = (props) => {
         ev.preventDefault()
         if (!isFormValid) return;
 
+        setErrorInfo(null)
         const commentObj = {
             eventid: props.eventid,
             email: emailInputRef.current.value,
@@ -49,19 +51,33 @@ const NewComment = (props) => {
                 'Content-Type': 'application/json'
             }
         })
-        if (res.status === 422) {
-            throw new Error('Input validation error.  Please contact your support group at 410 111-222')
+        
+        const data = await res.json()
+        await console.log('data', res.status, data)
+        
+        if (res.status === 201) {
+            setDone(true)
+            clear()
+        } else {
+            const obj = {
+                statusCode: res.status,
+                appStatus: data.status,
+                originalError: data.result
+            }
+            setErrorInfo(obj)
         }
-
-        const result = await res.json()
-        setDone(true)
-        clear()
-
-        props.onAddComment(result)
+      
+        props.onAddComment(data)
     }
 
     return (
         <>
+            {
+                errorInfo && <div>
+                    <p>Error occured:</p>
+                    {JSON.stringify(errorInfo)}
+                </div>
+            }
             <form className={classes.form} onSubmit={handleSubmit} onReset={clear}
             >
                 <div className={classes.row}>

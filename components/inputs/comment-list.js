@@ -15,7 +15,7 @@ const CommentList = (props) => {
         }
 
         if (props.showComments) {
-            getData()
+            // getData()
         }
     
     },[props])
