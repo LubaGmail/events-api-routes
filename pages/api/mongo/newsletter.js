@@ -1,7 +1,19 @@
 // http://localhost:3000/api/mongo/newsletter
 
-const MONGO_URI = 'mongodb+srv://m220student:perchik@cluster0.jb7dw.mongodb.net/?retryWrites=true&w=majority'
+const MONGO_URI = 'mongodb+srv://m220student:zperchik@cluster0.jb7dw.mongodb.net/?retryWrites=true&w=majority'
 const MongoClient = require('mongodb').MongoClient 
+
+const connectDb = async () => {
+    const client = await MongoClient.connect(MONGO_URI)
+    return client
+}
+const insertRecord = async (client, record) => {
+    const db = client.db('events')
+    const coll = db.collection('newsletter')
+    const result = await coll.insertOne(record)
+
+    return result
+}
 
 const handler = async(req, res) => {
     switch (req.method) {
@@ -9,18 +21,29 @@ const handler = async(req, res) => {
             let email = req.body.email
 
             if (!email || email < 5 || !email.includes('@') ) {
-                res.status(422).json({ status: 'validation failed', record: 'invalid email.' })
+                res.status(422).json({ status: 'validation failed', result: 'invalid email.' })
             } else {
-                const client = await MongoClient.connect(MONGO_URI)
-                const db = client.db('events')
-                const coll = db.collection('newsletter')
-                const insId = await coll.insertOne({email: email})
-                console.log('insId', insId)
-
+                let client = null
+                try {
+                    client = await connectDb()
+                } catch (error) {
+                    res.status(500).json({ status: 'failed to connect', result: error })
+                    return 
+                }
+         
+                try {
+                    // const result = await insertRecord(client, null)
+                    const result = await insertRecord(client, { email: email })
+                    res.status(201).json({ status: 'success', result: result })
+                } catch (error) {
+                    console.log('insert error', error)
+                    res.status(500).json({ status: 'failed to connect', result: error })
+                    if (client) client.close()  
+                    return
+                }
+             
                 if (client) client.close()  
-                
-                res.status(201).json({ status: 'success', record: req.body })
-           }
+            }
    
            break
         case 'GET':

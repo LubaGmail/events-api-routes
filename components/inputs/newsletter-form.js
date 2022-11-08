@@ -1,6 +1,8 @@
 import {useRef, useState} from 'react'
 
 import classes from './newsletter-form.module.css'
+import Backdrop from '../ui/Backdrop'
+import Modal from '../ui/Modal'
 
 const FILE_API = '/api/newsletter'
 const MONGO_API = '/api/mongo/newsletter' 
@@ -8,10 +10,12 @@ const MONGO_API = '/api/mongo/newsletter'
 const NewsletterForm = () => {
     const emailRef = useRef()
     const [success, setSuccess] = useState()
-    const [error, setError] = useState()
+    const [isError, setIsError] = useState()
+    const [errorInfo, setErrorInfo] = useState()
     const [isFormValid, setIsFormValid] = useState(false)
     const successIcon = '/images/icons8-done-16.png'
     const errorIcon = '/images/icons8-exclamation-mark-16.png'
+    const [isModalVisible, setIsModalVisible] = useState(false);
 
     const registrationHandler = async  (event) => {
         event.preventDefault();
@@ -19,7 +23,6 @@ const NewsletterForm = () => {
         const email = emailRef.current.value
 
         const obj = {
-            id: new Date().toISOString(),
             email: email
         }
 
@@ -31,18 +34,43 @@ const NewsletterForm = () => {
             }
         })
 
-        const result = await res.json()
-      if (result.status === 'success') {
-          setSuccess(true)
-          emailRef.current.value = ''
-        } else  {
-          setError(true)
+        const data = await res.json()
+        // await console.log('data', res.status,  data)
+        
+        if (data.status === 'success') {
+            setSuccess(true)
+            emailRef.current.value = ''
+          } else  {
+            setIsError(true)
+            const obj = {
+              statusCode: res.status,
+              appStatus: data.status,
+              resultObj: data.result,
+            }
+            setErrorInfo(obj)
+       
         }
         setIsFormValid(false)
+      
     }
   
+    const dismissError = () => {
+      setIsError(false)
+      setErrorInfo(null)
+      setIsModalVisible(false);
+    }
+    
+    const showErrorDetail = () => {
+      setIsModalVisible(true);  
+    }
+  
+    const hideErrorDetail = () => {
+      setIsModalVisible(false);  
+    }
+      
+        
     const handleChange = () => {
-      setIsFormValid(false); setSuccess(false); setError(false)
+      setIsFormValid(false); setSuccess(false); setIsError(false)
       if (!emailRef.current.value || emailRef.current.value.length < 6 ||
         !emailRef.current.value.includes('@') 
       ) {
@@ -53,7 +81,13 @@ const NewsletterForm = () => {
     }
 
     return (
-        <section className={classes.newsletter}>
+      <section className={classes.newsletter}>
+        {/* errorInfo: {JSON.stringify({errorInfo})} */}
+        {
+          isError && <div>
+            Error occured. <button onClick={showErrorDetail}>See error details</button> <button onClick={dismissError}>x</button>
+          </div>
+        }
           <div className={classes.control}>
             <h3>Sign up to stay updated!</h3>
           </div>
@@ -71,7 +105,11 @@ const NewsletterForm = () => {
                 Register
               </button>&nbsp;
               { success ? <img src={successIcon} /> : null }      
-              { error   ? <img src={errorIcon} />   : null }  
+              {isError ? <img src={errorIcon} /> : null}  
+            
+              {isModalVisible && <Backdrop hideErrorDetail={hideErrorDetail} />}
+              {isModalVisible && <Modal hideErrorDetail={hideErrorDetail} errorInfo={errorInfo} />}
+
             </div>
           </form>
         </section>

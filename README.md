@@ -43,5 +43,14 @@ VII     Mongodb
                 > var firstName="Bob";
                 > db.demo107.find({"Name":firstName});
 
+        vi.     Error handling
+                i.      NewsletterForm                  components/inputs/
+                        handler                         pages\api\mongo\newsletter.js
+                        a.      try/catch
+                        b.      UI feedback
+
+
+
+
 
                                                                                                
