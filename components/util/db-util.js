@@ -13,7 +13,19 @@ const insertRecord = async (client, dbName, collName, record) => {
     return result
 }
 
+const getRecordsByVar = async (client, dbName, collName, query, sortParam) => {
+    const db = client.db(dbName)
+    const coll = db.collection(collName)
+    const cursor = await coll
+        .find(query)
+        .sort(sortParam )
+    const arr = await cursor.toArray()
+   
+    return arr
+}
+
 module.exports = {
     connectDb,
     insertRecord,
+    getRecordsByVar
 };

@@ -41,7 +41,7 @@ VII     Mongodb
                 pages/events/[eventid] (eventid) -> components/input/Comments (eventid)  -> CommentList
 
                 > var firstName="Bob";
-                > db.demo107.find({"Name":firstName});
+                > db.demo107.find({"eventid": eventid}).sort({"name": -1})
 
         vi.     Error handling
                 i.      NewsletterForm                  components/inputs/

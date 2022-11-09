@@ -6,21 +6,40 @@ const MONGO_API = '/api/mongo/'
 
 const CommentList = (props) => {
     const [comments, setComments] = useState()
+    const [errorInfo, setErrorInfo] = useState()
   
     useEffect(() => {
         const getData = async () => {
             const res = await fetch(MONGO_API + props.eventid)
-            const data = await res.json()
-            setComments(data.comments)
+            const jsonRes = await res.json()
+
+            const statusCode = await res.status
+            if (statusCode === 200) {
+                setComments(jsonRes.data)
+            } else {
+                const obj = {
+                    statusCode: statusCode,
+                    appStatus: jsonRes.status,
+                    originalError: jsonRes.result
+                }
+                setErrorInfo(obj)
+            }
+
+            // console.log('error', jsonRes)
         }
 
         if (props.showComments) {
-            // getData()
+            getData()
         }
     
-    },[props])
+    }, [props])
+    
+    if (errorInfo) {
+        return <p>{JSON.stringify(errorInfo)}   </p>
+    }
 
     return (
+        
         <>
             <div className={classes.comments}>
                 {

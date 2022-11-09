@@ -2,7 +2,7 @@ import { useRouter } from 'next/router'
 // const MONGO_URI = 'mongodb+srv://m220student:perchik@cluster0.jb7dw.mongodb.net/?retryWrites=true&w=majority'
 const MongoClient = require('mongodb').MongoClient 
 
-import {connectDb, insertRecord} from '../../../components/util/db-util'
+import {connectDb, insertRecord, getRecordsByVar} from '../../../components/util/db-util'
 
 // http://localhost:3000/api/mongo/e2
 
@@ -52,21 +52,26 @@ const handler = async(req, res) => {
             }
 
             break
+        
+        // http://localhost:3000/api/mongo/e1
+        //
         case 'GET':
-            const client = await MongoClient.connect(MONGO_URI)
-            const db = client.db('events')
-            const coll = db.collection('comments')
+            let client
+            try {
+                client = await connectDb()
+            } catch (error) {
+                res.status(500).json({ status: 'Failure to connect', result: error.toString() })
+                return
+            }
 
             try {
                 let query = { eventid: eventid };
-                let cursor = await coll.find(query)
-                let arr = await cursor.toArray()
-
-                res.status(200).json({ status: 'success', comments: arr })
-            } catch (e) {
-                console.log('Error: ' + e)
-                res.status(500).json({ status: 'failure', record: req.body })
-                throw new Error(e)
+                let sortParam = { "name": -1 }
+                const result = await getRecordsByVar(client, 'events', 'comments', query, sortParam)
+     
+                res.status(200).json({ status: 'success', data: result })
+            } catch (error) {
+                res.status(500).json({ status: 'Failure to connect', result: error.toString() })
             } 
             if (client) client.close();
 
