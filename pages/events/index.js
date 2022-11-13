@@ -11,7 +11,7 @@ const EventsPage = (props) => {
 
     return (
         <>
-            <div>
+            <div>   
                 <Head>
                     <title>Browse all events</title>
                     <meta
@@ -23,7 +23,7 @@ const EventsPage = (props) => {
 
             <div className={styles.container}>
                 <SearchForm />
-                <p>All Events</p>
+
                 <div>
                 {
                     events.map ((el, i) => (

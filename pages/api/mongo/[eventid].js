@@ -1,5 +1,4 @@
 import { useRouter } from 'next/router'
-// const MONGO_URI = 'mongodb+srv://m220student:perchik@cluster0.jb7dw.mongodb.net/?retryWrites=true&w=majority'
 const MongoClient = require('mongodb').MongoClient 
 
 import {connectDb, insertRecord, getRecordsByVar} from '../../../components/util/db-util'

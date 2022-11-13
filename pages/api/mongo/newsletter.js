@@ -1,10 +1,9 @@
 // http://localhost:3000/api/mongo/newsletter
 
-const MONGO_URI = 'mongodb+srv://m220student:perchik@cluster0.jb7dw.mongodb.net/?retryWrites=true&w=majority'
 const MongoClient = require('mongodb').MongoClient 
 
 const connectDb = async () => {
-    const client = await MongoClient.connect(MONGO_URI)
+    const client = await MongoClient.connect(process.env.MONGO_URI)
     return client
 }
 const insertRecord = async (client, record) => {

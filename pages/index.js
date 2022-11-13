@@ -23,7 +23,6 @@ const HomePage = (props) => {
 
       <div className={styles.container}>
         <NewsletterForm />
-        <p>Featured Events</p>
         {
           events.map ((el, i) => (
               <li key={el.eventid}>

@@ -72,7 +72,7 @@ const FilteredEventsPage = (props) => {
                 </div>
 
                 <div className={ styles.container }>
-                    <h2>Filtered Events</h2>
+                
                     {
                         events?.map((el, i) => (
                             <li key={i}>
