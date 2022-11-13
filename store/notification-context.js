@@ -19,7 +19,7 @@ export function NotificationContextProvider(props) {
     ) {
       const timer = setTimeout(() => {
         setActiveNotification(null);
-      }, 3000);
+      }, 5000);
 
       return () => {
         clearTimeout(timer);

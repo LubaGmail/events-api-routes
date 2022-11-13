@@ -1,5 +1,6 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useContext } from 'react';
 import classes from './comment-new.module.css';
+import NotificationContext from '../../store/notification-context';
 
 const FILE_API = '/api/comments/'
 const MONGO_API = '/api/mongo/'
@@ -7,11 +8,12 @@ const MONGO_API = '/api/mongo/'
 const NewComment = (props) => {
     const [done, setDone] = useState()
     const [isFormValid, setIsFormValid] = useState()
-    const [errorInfo, setErrorInfo] = useState()
-
+  
     const emailInputRef = useRef()
     const nameInputRef = useRef()
     const commentInputRef = useRef()
+
+    const notificationCtx = useContext(NotificationContext);
 
     const clear = () => {
         emailInputRef.current.value = ''
@@ -36,13 +38,17 @@ const NewComment = (props) => {
         ev.preventDefault()
         if (!isFormValid) return;
 
-        setErrorInfo(null)
         const commentObj = {
             eventid: props.eventid,
             email: emailInputRef.current.value,
             name:  nameInputRef.current.value,
             comment: commentInputRef.current.value 
         }
+        notificationCtx.showNotification({
+            title: 'Signing up...',
+            message: 'Registering for newsletter.',
+            status: 'pending',
+        });
 
         const res = await fetch(MONGO_API + props/eventid, {
             method: 'POST', 
@@ -53,18 +59,26 @@ const NewComment = (props) => {
         })
         
         const data = await res.json()
-        await console.log('data', res.status, data)
-        
+          
         if (res.status === 201) {
             setDone(true)
             clear()
+            notificationCtx.showNotification({
+                title: 'Comment added',
+                message: data.result,
+                status: 'success',
+            });
         } else {
             const obj = {
                 statusCode: res.status,
                 appStatus: data.status,
                 originalError: data.result
             }
-            setErrorInfo(obj)
+            notificationCtx.showNotification({
+                title: 'Error!',
+                message: data.result,
+                status: 'error',
+            });
         }
       
         props.onAddComment(data)
@@ -72,12 +86,6 @@ const NewComment = (props) => {
 
     return (
         <>
-            {
-                errorInfo && <div>
-                    <p>Error occured:</p>
-                    {JSON.stringify(errorInfo)}
-                </div>
-            }
             <form className={classes.form} onSubmit={handleSubmit} onReset={clear}
             >
                 <div className={classes.row}>
