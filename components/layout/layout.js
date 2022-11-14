@@ -6,6 +6,14 @@ import NotificationContext from "../../store/notification-context"
 
 const Layout = (props) => {
     const notificationCtx = useContext(NotificationContext);
+
+    /* notification obj
+        {
+            title: 'Signing up...',
+            message: "Registering for newsletter."
+            status: "pending"
+        }
+    */
     const activeNotification = notificationCtx.notification;
 
     return (
