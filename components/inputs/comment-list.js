@@ -7,9 +7,11 @@ const MONGO_API = '/api/mongo/'
 const CommentList = (props) => {
     const [comments, setComments] = useState()
     const [errorInfo, setErrorInfo] = useState()
-  
+    const [isLoading, setIsLoading] = useState()
+
     useEffect(() => {
         const getData = async () => {
+            setIsLoading(true)
             const res = await fetch(MONGO_API + props.eventid)
             const jsonRes = await res.json()
 
@@ -25,7 +27,7 @@ const CommentList = (props) => {
                 setErrorInfo(obj)
             }
 
-            // console.log('error', jsonRes)
+            setIsLoading(false)
         }
 
         if (props.showComments) {
@@ -37,10 +39,15 @@ const CommentList = (props) => {
     if (errorInfo) {
         return <p>{JSON.stringify(errorInfo)}   </p>
     }
-
+    
     return (
         
         <>
+            {
+                isLoading && (
+                    <p>Loading...</p>
+                )
+            }
             <div className={classes.comments}>
                 {
                     comments?.map((el, i) => (

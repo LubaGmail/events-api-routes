@@ -11,6 +11,8 @@ const NotificationContext = createContext({
 export function NotificationContextProvider(props) {
   const [activeNotification, setActiveNotification] = useState();
 
+  // Listen for changes in activeNotification state and re-execute the code inside useEffect
+  //
   useEffect(() => {
     if (
       activeNotification &&

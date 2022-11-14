@@ -69,11 +69,6 @@ const NewComment = (props) => {
                 status: 'success',
             });
         } else {
-            const obj = {
-                statusCode: res.status,
-                appStatus: data.status,
-                originalError: data.result
-            }
             notificationCtx.showNotification({
                 title: 'Error!',
                 message: data.result,
